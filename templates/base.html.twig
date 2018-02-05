@@ -2,11 +2,23 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %} Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        <header>{% block header%} Header {% endblock %}</header>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+        <footer>{% block footer %} Footer {% endblock %}</footer>
+
+        <h1>Produits</h1>
+        {%  for product in products %}
+        <li>{{ product.lib }}</li><br>
+        {%  endfor %}
+
+        <h1>Catégories</h1>
+        {%  for category in categories %}
+            <li>{{ category.lib }}</li><br>
+        {%  endfor %}
     </body>
 </html>
