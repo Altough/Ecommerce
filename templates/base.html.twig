@@ -11,15 +11,21 @@
         {% block javascripts %}{% endblock %}
         <footer>{% block footer %} Footer {% endblock %}</footer>
 
+        {%  block produit %}
         <h1>Produits</h1>
         {%  for product in products %}
-        <li>{{ product.lib }}</li>
-        <img src="{{ vich_uploader_asset(product, 'imageFile') }}" /><br>
+        <div><a href="{{ path('products', {'id': product.id}) }}">
+            <li>{{ product.lib }}</li>
+            <img src="{{ vich_uploader_asset(product, 'imageFile') }}" /></a><br>
+        </div>
         {%  endfor %}
-
-        <h1>Catégories</h1>
-        {%  for category in categories %}
-            <li>{{ category.lib }}</li><br>
-        {%  endfor %}
+        {% endblock %}
     </body>
 </html>
+
+{#}%  block Categories %}
+    <h1>Catégories</h1>
+    {%  for category in categories %}
+        <li>{{ category.lib }}</li><br>
+    {%  endfor %}
+{% endblock %#}

@@ -1,0 +1,7 @@
+{% extends "base.html.twig" %}
+
+{%  block produit %}
+    <h1>Produits</h1>
+        <li>{{ product.lib }}</li>
+        <img src="{{ vich_uploader_asset(product, 'imageFile') }}" />
+{% endblock %}
