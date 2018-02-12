@@ -12,5 +12,5 @@ easy_admin:
                     - lib
                     - price
                     - description
-                    - { property: 'imageFile', type: 'vich_image' }
+                    - { property: 'imageFile', type: 'vich_image'}
 
