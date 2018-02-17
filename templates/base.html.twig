@@ -1,3 +1,7 @@
+{#}% from "_category.html.twig" import categories %#}
+{% from "_product.html.twig" import  product %}
+{% include "_product.html.twig" %}
+{% include ["_product.html.twig", "_category.html.twig"] %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,15 +14,11 @@
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
         <footer>{% block footer %} Footer {% endblock %}</footer>
-
+        <p>{{ product(products) }}</p>
         {%  block produit %}
         <h1>Produits</h1>
         {%  for product in products %}
-        <div><a href="{{ path('products', {'id': product.id}) }}">
-            <h3>{{ product.lib }}</h3>
-            <img src="{{ vich_uploader_asset(product, 'imageFile') }}" /></a><br>
-            <p>{{ product.description }}</p>
-        </div>
+
         {%  endfor %}
         {% endblock %}
     </body>

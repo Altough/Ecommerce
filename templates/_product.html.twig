@@ -1,0 +1,9 @@
+{% macro product(products) %}
+    {%  for product in products %}
+        <div><a href="{{ path('products', {'id': product.id}) }}">
+                <h3>{{ product.lib }}</h3>
+                <img src="{{ vich_uploader_asset(product, 'imageFile') }}" /></a><br>
+            <p>{{ product.description }}</p>
+        </div>
+    {%  endfor %}
+{% endmacro %}
