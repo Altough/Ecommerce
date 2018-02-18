@@ -6,7 +6,13 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        <header>{% block header%} Header {% endblock %}</header>
+        <header>
+            {% block header%} <h1>Categories</h1>
+                {%  for category in categories %}
+                    {% include "_category.html.twig" with {"category" : category} %}
+                {% endfor %}
+            {% endblock %}
+        </header>
 
         {% block body %}
             <h1>Produits</h1>
