@@ -16,16 +16,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ProductController extends controller
+class CategoryController extends controller
 {
     /**
-     * @Route ("/products", name ="products")
+     * @Route ("/categories", name ="categories")
      */
     public function indexAction(Request $request){
-        $products = $this->getDoctrine()
-            ->getRepository(Product::class)
+        $categories = $this->getDoctrine()
+            ->getRepository(Category::class)
             ->findAll();
 
-        return $this->render('Product/show.html.twig',['products' => $products]);
+        return $this->render('Category/show.html.twig',['categories' => $categories]);
     }
 }
