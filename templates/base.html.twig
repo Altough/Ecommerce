@@ -1,7 +1,3 @@
-{#}% from "_category.html.twig" import categories %#}
-{% from "_product.html.twig" import  product %}
-{% include "_product.html.twig" %}
-{% include ["_product.html.twig", "_category.html.twig"] %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,23 +7,15 @@
     </head>
     <body>
         <header>{% block header%} Header {% endblock %}</header>
-        {% block body %}{% endblock %}
+
+        {% block body %}
+            <h1>Produits</h1>
+            {%  for product in products %}
+                {% include "_product.html.twig" with {"product" : product} %}
+            {% endfor %}
+        {% endblock %}
+
         {% block javascripts %}{% endblock %}
         <footer>{% block footer %} Footer {% endblock %}</footer>
-        <p>{{ product(products) }}</p>
-        {%  block produit %}
-        <h1>Produits</h1>
-        {%  for product in products %}
-
-        {%  endfor %}
-        {% endblock %}
     </body>
 </html>
-
-{#}%  block Categories %}
-    <h1>Catégories</h1>
-    {%  for category in categories %}
-        <li>{{ category.lib }}</li><br>
-        <p>{{ category.description }}</p>
-    {%  endfor %}
-{% endblock %#}
