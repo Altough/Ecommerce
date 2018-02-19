@@ -16,19 +16,30 @@ use Symfony\Component\Routing\Annotation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
 class BasketController extends controller
 {
     /**
-     * @Route ("/panier", name ="panier")
+     * @Route ("/basket", name ="basket")
      */
-    public function indexAction(Request $request){
-        $panier = $this->getDoctrine()
-            ->getRepository(CartItem::class)
-            ->findAll();
+    public function indexAction(Request $request, SessionInterface $session){
+        $form = $request->query->get('Quantity');
+        //$form->get('Quantity')->getData();
+        // ici je devrais avoir la quantité du produit ainsi que son id
 
-        return $this->render('Basket/show.html.twig',['panier' => $panier]);
+        // Je créer en suit la quantité de produit
+        // je les ajoutes au cartItem
+        // J'ajoute le cartItem au panier
+        //$session->set('panier',$id);
+        $panier = $request->query->get("");
+        /*$this->getDoctrine()
+            ->getRepository(CartItem::class)
+            ->findAll();*/
+
+        return $this->render('Basket/show.html.twig',['panier' => $panier,
+                                                            'form' => $form]);
     }
 
    /* /**

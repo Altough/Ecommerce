@@ -1,14 +1,21 @@
+{# Page d'affichage du panier #}
+
 {% extends "base.html.twig" %}
 
 {%  block title %}
-    Basket
+Panier
 {% endblock %}
 
 {% block header %}
-    <h1>Basket</h1>
+    Produit
+{% endblock %}
+{%  block body %}
+    <h1>Panier </h1>
+        {{ form }}
 {% endblock %}
 
-{% block body %}
-    <h1>Basket</h1>
-{% endblock %}
 
+{#% include "_product.html.twig" with {"product" : product} %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}#}
