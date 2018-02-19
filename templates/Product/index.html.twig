@@ -1,16 +1,15 @@
+{# Page d'affichage des produits #}
 {% extends "base.html.twig" %}
 
 {%  block title %}
-
-{% endblock %}
-<h1>Produits</h1>
-    {%  for product in products %}
-    <div><a href="{{ path('products', {'id': product.id}) }}">
-            <li>{{ product.lib }}</li><br>
-            <li>{{ product.description }}</li>
-            <img src="{{ vich_uploader_asset(product, 'imageFile') }}" /></a><br>
-    </div>
-{% block body %}
-
+    Produits
 {% endblock %}
 
+{% block header %}
+    Liste des produits
+{%  endblock %}
+{%  block body %}
+     {%  for product in products %}
+        {% include "_product.html.twig" with {"product" : product} %}
+     {% endfor %}
+{% endblock %}

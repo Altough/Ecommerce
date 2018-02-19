@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class BasketController extends controller
 {
     /**
@@ -29,4 +30,18 @@ class BasketController extends controller
 
         return $this->render('Basket/show.html.twig',['panier' => $panier]);
     }
+
+   /* /**
+     * @param Request $request
+     * @Route("/panier_add", name ="panier_add)
+     */
+    /*public function add(Request $request){
+        $basket = $request->query->get("basket");
+        $product = $request->query->get("id");
+        $cartItem = $this->getDoctrine()
+                         ->getRepository(CartItem::class)
+                         ->add($product);
+        $cartItem->getEntityManager()->setBasket($basket);
+
+    }*/
 }

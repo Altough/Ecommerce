@@ -25,8 +25,17 @@ class HomeController extends Controller
         $categories = $this->getDoctrine()
             ->getRepository(Category::class)
             ->findAll();
-        return $this->render('./base.html.twig',['products' => $products,
-        'categories' => $categories]);
-    }
 
+        $form = $this->createForm(ProductForm::class, $products);
+
+        $form->handleRequest($request);
+        //return $this->render('./Product/addAction.html.twig', ['form' => $form->createView(),]);
+
+
+       // return $this->render('Product/show.html.twig',['products' => $products,
+         //   'form' => $form->createView()]);
+
+        return $this->render('./base.html.twig',['products' => $products,
+        'categories' => $categories, 'form' => $form->createView()]);
+    }
 }

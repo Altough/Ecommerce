@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use App\Entity\Product;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,7 +27,9 @@ class Category
     private $lib;
 
     /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="category", cascade={"all"})
+     *
+     * @var Collection<Product>
      */
     private $products;
 
@@ -80,8 +84,10 @@ class Category
      */
     public function setProducts($products)
     {
-        $this->products = $products;
+        $this->products = new ArrayCollection($products);
+
     }
+
 
     public function __toString()
     {
