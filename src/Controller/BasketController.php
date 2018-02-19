@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Entity\CartItem;
 use App\Entity\Product;
 use App\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,16 +17,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ProductController extends controller
+class BasketController extends controller
 {
     /**
-     * @Route ("/products", name ="products")
+     * @Route ("/panier", name ="panier")
      */
     public function indexAction(Request $request){
-        $products = $this->getDoctrine()
-            ->getRepository(Product::class)
+        $panier = $this->getDoctrine()
+            ->getRepository(CartItem::class)
             ->findAll();
 
-        return $this->render('Product/show.html.twig',['products' => $products]);
+        return $this->render('Basket/show.html.twig',['panier' => $panier]);
     }
 }

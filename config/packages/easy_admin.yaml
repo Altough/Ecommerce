@@ -2,9 +2,13 @@ easy_admin:
     entities:
 #        # List the entity class name you want to manage
 #        - App\Entity\Basket
-#        - App\Entity\CartItem
+#       App\Entity\CartItem
         Category:
             class: App\Entity\Category
+            form:
+                 fields:
+                    - lib
+                    - { property: 'products'}
         Product:
             class: App\Entity\Product
             form:
@@ -13,4 +17,4 @@ easy_admin:
                     - price
                     - description
                     - { property: 'imageFile', type: 'vich_image'}
-
+                    - category

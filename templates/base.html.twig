@@ -6,28 +6,23 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        <header>{% block header%} Header {% endblock %}</header>
-        {% block body %}{% endblock %}
+        <header>
+            {% block header%} <h1>Categories</h1>
+                {%  for category in categories %}
+                    {% include "_category.html.twig" with {"category" : category} %}
+                <button href="{{ path('basket', {'id': product.id})}}">ajouter au panier</button>
+                {% endfor %}
+            {% endblock %}
+        </header>
+
+        {% block body %}
+            <h1>Produits</h1>
+            {%  for product in products %}
+                {% include "_product.html.twig" with {"product" : product} %}
+            {% endfor %}
+        {% endblock %}
+
         {% block javascripts %}{% endblock %}
         <footer>{% block footer %} Footer {% endblock %}</footer>
-
-        {%  block produit %}
-        <h1>Produits</h1>
-        {%  for product in products %}
-        <div><a href="{{ path('products', {'id': product.id}) }}">
-            <h3>{{ product.lib }}</h3>
-            <img src="{{ vich_uploader_asset(product, 'imageFile') }}" /></a><br>
-            <p>{{ product.description }}</p>
-        </div>
-        {%  endfor %}
-        {% endblock %}
     </body>
 </html>
-
-{#}%  block Categories %}
-    <h1>Catégories</h1>
-    {%  for category in categories %}
-        <li>{{ category.lib }}</li><br>
-        <p>{{ category.description }}</p>
-    {%  endfor %}
-{% endblock %#}
