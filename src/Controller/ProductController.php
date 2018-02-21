@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Basket;
 use App\Entity\CartItem;
 use App\Entity\Product;
 use App\Form\QuantityForm;
@@ -36,14 +37,34 @@ class ProductController extends controller
      */
     public function show(Request $request){
         $id = $request->query->get('id');
-        $product = $this->getDoctrine()->getRepository(Product::class)
-                                        ->find($id);
+        // On récupère le produit
+
+        $cart = new CartItem();
+        $cart->setBasket(new Basket());
+        //Faut associer se produit à un CartItem
+
+
+        //On va créer des copies du produit en fonction de la quantité
+
         $form = $this->createForm(QuantityForm::class);
 
-        $form->handleRequest($request);
+        //$form->handleRequest($request);
+        if ($request->isMethod('POST')) {
+            $form->submit($request->request->get($form->getName()));
 
-        return $this->render('Product/show.html.twig', ['product' => $product,
-                                                'form' => $form->createView()]);
+            if ($form->isSubmitted() && $form->isValid()) {
+                var_dump('YES');
+                $quantity = $form->get("Quantity")->getData();
+                if($quantity > 1){
+
+                }
+
+                //return $this->redirectToRoute('home');
+            }
+        }
+
+       return $this->render('Product/show.html.twig', ['product' => $product,
+                                              'form' => $form->createView()]);
     }
 
     /**
@@ -59,6 +80,26 @@ class ProductController extends controller
         $form->handleRequest($request);
         return $this->render('./Product/addAction.html.twig', ['form' => $form->createView(),]);
 
+
+    }
+
+    /**
+     * @param $id
+     * @param $copie
+     *
+     */
+    public function creat($id, $copie){
+        $cart = new CartItem();
+        $cart->setBasket(new Basket());
+        $product = $this->getDoctrine()->getRepository(Product::class)
+            ->find($id);
+        for($i = 0; $i<$copie; $i++){
+            $productCopie = new Product();
+            $productCopie->setCartItem($cart);
+            $productCopie->setLib("copie " . $product->getlib());
+            $productCopie->setImage($product->getImage());
+            // mettre dans la BD
+        }
 
     }
 }

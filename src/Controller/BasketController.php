@@ -12,6 +12,7 @@ use App\Entity\CartItem;
 use App\Entity\Product;
 use App\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Routing\Annotation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,15 +26,15 @@ class BasketController extends controller
      * @Route ("/basket", name ="basket")
      */
     public function indexAction(Request $request, SessionInterface $session){
-        $form = $request->query->get('Quantity');
-        //$form->get('Quantity')->getData();
+       // $form = $request->query->get('Quantity');
+       // $forms->get('Quantity')->getData();
         // ici je devrais avoir la quantité du produit ainsi que son id
 
         // Je créer en suit la quantité de produit
         // je les ajoutes au cartItem
         // J'ajoute le cartItem au panier
         //$session->set('panier',$id);
-        $panier = $request->query->get("");
+       // $panier = $request->query->get("id");
         /*$this->getDoctrine()
             ->getRepository(CartItem::class)
             ->findAll();*/

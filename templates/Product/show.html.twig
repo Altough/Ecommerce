@@ -13,7 +13,7 @@ Produits
     <h1>Produit {# Faudra récupèrer le nom du produit #}</h1>
 
     {% include "_product.html.twig" with {"product" : product} %}
-    {{ form_start(form, {'action': path('basket'), 'method': 'POST'}) }}
+    {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
 {% endblock %}

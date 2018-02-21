@@ -13,7 +13,7 @@ class QuantityForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options){
         $builder
-            ->add("Quantie", IntegerType::class)
+            ->add("Quantity", IntegerType::class)
             ->add("ajouter au panier", SubmitType::class)
             ->getForm();
     }
