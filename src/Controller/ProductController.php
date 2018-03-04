@@ -11,6 +11,7 @@ namespace App\Controller;
 use App\Entity\Basket;
 use App\Entity\CartItem;
 use App\Entity\Product;
+use App\Form\CartItemForm;
 use App\Form\QuantityForm;
 use App\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -34,32 +35,43 @@ class ProductController extends controller
 
     /**
      * @Route ("/product_show", name ="product_show")
+     * Affichage d'un produit avec option d'ajout au panier
      */
     public function show(Request $request){
         $id = $request->query->get('id');
         // On récupère le produit
+        $product = $this->getDoctrine()->getManager()
+            ->getRepository(Product::class)
+            ->find($id);
 
-        $cart = new CartItem();
-        $cart->setBasket(new Basket());
-        //Faut associer se produit à un CartItem
+        $form = $this->createForm(CartItemForm::class);
+       // $form->handleRequest($request);
 
-
-        //On va créer des copies du produit en fonction de la quantité
-
-        $form = $this->createForm(QuantityForm::class);
-
-        //$form->handleRequest($request);
         if ($request->isMethod('POST')) {
             $form->submit($request->request->get($form->getName()));
 
             if ($form->isSubmitted() && $form->isValid()) {
-                var_dump('YES');
-                $quantity = $form->get("Quantity")->getData();
-                if($quantity > 1){
+               // var_dump('YES');
 
-                }
+                //On créée au préalable un panier et la commande
+                $em = $this->getDoctrine()->getManager();
+                $cart = new CartItem();
+                $cart->setLib('testCart');
+                $cart->setQuantity($form->get("Quantity")->getData());
+                $em->persist($cart);
+                $em->flush();
 
-                //return $this->redirectToRoute('home');
+                $product->setCartItem($cart);
+
+                $basket = new Basket();
+                $basket->setLib('testBasket');
+                $basket->setCartItem($cart);
+
+                $em->persist($basket);
+                $em->flush();
+                //Faut associer se produit à un CartItem
+
+                return $this->redirectToRoute('home');
             }
         }
 
@@ -89,17 +101,17 @@ class ProductController extends controller
      *
      */
     public function creat($id, $copie){
+        $em = $this->getDoctrine()->getManager();
         $cart = new CartItem();
+        $cart->setLib("cart1x")
+             ->setQuantity($copie);
         $cart->setBasket(new Basket());
-        $product = $this->getDoctrine()->getRepository(Product::class)
-            ->find($id);
-        for($i = 0; $i<$copie; $i++){
-            $productCopie = new Product();
-            $productCopie->setCartItem($cart);
-            $productCopie->setLib("copie " . $product->getlib());
-            $productCopie->setImage($product->getImage());
-            // mettre dans la BD
-        }
 
+
+        $product = $this->getDoctrine()->getManager()
+                        ->getRepository(Product::class)
+                        ->find($id)
+                        ->setCartItem($cart);
+        $em->flush();
     }
 }

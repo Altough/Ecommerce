@@ -25,6 +25,27 @@ class CartItem
     private $lib;
 
     /**
+     * @var integer
+     * @ORM\Column(type="integer")
+     */
+    private $quantity;
+
+    /**
+     * @return mixed
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * @param mixed $quantity
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+    }
+    /**
      * @ORM\OneToMany(targetEntity="Product", mappedBy="cartItem")
      */
     private $products;
@@ -85,7 +106,7 @@ class CartItem
      */
     public function setProducts($products)
     {
-        $this->products = $products;
+        $this->products->add($products);
     }
 
     /**
@@ -101,13 +122,12 @@ class CartItem
      */
     public function setBasket($baskets)
     {
-        $this->baskets = $baskets;
+        $this->baskets->add($baskets);
     }
 
     public function __toString()
     {
-        // TODO: Implement __toString() method.
-        return $this-> lib;
+        return $this->lib;
     }
 
 }

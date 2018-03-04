@@ -51,21 +51,18 @@ class Product
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
-     * @ORM\JoinColumn(nullable=true)
      */
     private $image;
 
     /**
      * @Vich\UploadableField(mapping="product_images", fileNameProperty="image")
      * @var File
-     * @ORM\JoinColumn(nullable=true)
      */
     private $imageFile;
 
     /**
      * @ORM\Column(type="datetime")
      * @var \DateTime
-     * @ORM\JoinColumn(nullable=true)
      */
     private $updatedAt;
 

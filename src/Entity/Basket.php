@@ -25,6 +25,28 @@ class Basket
     private $cartItem;
 
     /**
+     * @ var string
+     * @ORM\Column(type="string", length=50)
+     */
+    private $lib;
+
+    /**
+     * @return mixed
+     */
+    public function getLib()
+    {
+        return $this->lib;
+    }
+
+    /**
+     * @param mixed $lib
+     */
+    public function setLib($lib)
+    {
+        $this->lib = $lib;
+    }
+
+    /**
      * @return mixed
      */
     public function getId()
