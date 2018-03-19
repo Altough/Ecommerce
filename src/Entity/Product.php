@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
+* @ApiResource
 * @ORM\Entity
 * @Vich\Uploadable
 */
@@ -43,10 +46,10 @@ class Product
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CartItem", inversedBy="products")
-     * @ORM\JoinColumn(nullable=true)
+     * One product has Many CartItems.
+     * @ORM\OneToMany(targetEntity="CartItem", mappedBy="product")
      */
-    private $cartItem;
+    private $cartItems;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -66,6 +69,9 @@ class Product
      */
     private $updatedAt;
 
+    public function __construct(){
+        $this->cartItems = new ArrayCollection();
+    }
     /**
      * @return \DateTime
      */
@@ -196,15 +202,15 @@ class Product
      */
     public function getCartItem()
     {
-        return $this->cartItem;
+        return $this->cartItems;
     }
 
     /**
      * @param mixed $cartItem
      */
-    public function setCartItem($cartItem)
+    public function setCartItems($cartItem)
     {
-        $this->cartItem = $cartItem;
+        $this->cartItems->add($cartItem);
     }
 
     public function __toString()

@@ -6,6 +6,10 @@
         <style>{% block stylesheets %}{% endblock %}</style>
     </head>
     <body>
+    {#{%  for basket in basket %}#}
+    {#}<a href="{{ path('basket_show', {'id': session.Panier1}) }}">#
+        {#{% endfor %}#}
+        <h3>Mon panier</h3></a>
         <header>
             {% block header%} <h1>Categories</h1>
                 {%  for category in categories %}
@@ -28,6 +32,16 @@
         <script>
         {% block javascripts %}{% endblock %}
         </script>
-        <footer>{% block footer %} Footer {% endblock %}</footer>
+        <footer>{% block footer %}
+{#   Le message flash (rajouter dans une pop up ?)
+            {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="flash-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+#}
+                Footer {% endblock %}</footer>
     </body>
 </html>

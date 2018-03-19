@@ -46,20 +46,17 @@ class CartItem
         $this->quantity = $quantity;
     }
     /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="cartItem")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="cartItems")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
-    private $products;
+    private $product;
 
     /**
-     * @ORM\OneToMany(targetEntity="Basket", mappedBy="cartItem")
+     * @ORM\ManyToOne(targetEntity="Basket", inversedBy="cartItems")
+     * @ORM\JoinColumn(name="basket_id", referencedColumnName="id")
      */
-    private $baskets;
+    private $basket;
 
-    public function __construct()
-    {
-        $this->products = new ArrayCollection();
-        $this->baskets = new ArrayCollection();
-    }
 
     /**
      * @return mixed
@@ -96,38 +93,37 @@ class CartItem
     /**
      * @return mixed
      */
-    public function getProducts()
+    public function getProduct()
     {
-        return $this->products;
+        return $this->product;
     }
 
     /**
-     * @param mixed $products
+     * @param mixed $product
      */
-    public function setProducts($products)
+    public function setProduct($product)
     {
-        $this->products->add($products);
+        $this->product->$product;
     }
 
     /**
      * @return mixed
      */
-    public function getBaskets()
+    public function getBasket()
     {
-        return $this->baskets;
+        return $this->basket;
     }
 
     /**
-     * @param mixed $baskets
+     * @param mixed $basket
      */
-    public function setBasket($baskets)
+    public function setBasket($basket)
     {
-        $this->baskets->add($baskets);
+        $this->baskets->$basket;
     }
 
     public function __toString()
     {
         return $this->lib;
     }
-
 }

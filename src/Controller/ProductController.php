@@ -19,6 +19,7 @@ use Symfony\Component\Routing\Annotation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ProductController extends controller
 {
@@ -37,13 +38,13 @@ class ProductController extends controller
      * @Route ("/product_show", name ="product_show")
      * Affichage d'un produit avec option d'ajout au panier
      */
-    public function show(Request $request){
+    public function show(Request $request, SessionInterface $session){
         $id = $request->query->get('id');
         // On récupère le produit
         $product = $this->getDoctrine()->getManager()
             ->getRepository(Product::class)
             ->find($id);
-
+        $basketId = 0;
         $form = $this->createForm(CartItemForm::class);
        // $form->handleRequest($request);
 
@@ -52,6 +53,11 @@ class ProductController extends controller
 
             if ($form->isSubmitted() && $form->isValid()) {
                // var_dump('YES');
+
+                $this->addFlash(
+                    'notice',
+                    'Votre produit à été ajouter dans le panier'
+                );
 
                 //On créée au préalable un panier et la commande
                 $em = $this->getDoctrine()->getManager();
@@ -69,6 +75,12 @@ class ProductController extends controller
 
                 $em->persist($basket);
                 $em->flush();
+
+                $session->set('Panier',$basket->getId());
+
+                //$ession->get("Panier");
+                $basketId = $session;
+
                 //Faut associer se produit à un CartItem
 
                 return $this->redirectToRoute('home');
@@ -76,7 +88,7 @@ class ProductController extends controller
         }
 
        return $this->render('Product/show.html.twig', ['product' => $product,
-                                              'form' => $form->createView()]);
+           'session' => $basketId, 'form' => $form->createView()]);
     }
 
     /**
@@ -100,18 +112,24 @@ class ProductController extends controller
      * @param $copie
      *
      */
-    public function creat($id, $copie){
+    public function creatBasket($cart)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $basket = new Basket();
+        $basket->setLib('testBasket');
+        $basket->setCartItem($cart);
+        $em->persist($basket);
+        $em->flush();
+    }
+
+    public function creatCartItem($nb){
+
+        //On créée au préalable un panier et la commande
         $em = $this->getDoctrine()->getManager();
         $cart = new CartItem();
-        $cart->setLib("cart1x")
-             ->setQuantity($copie);
-        $cart->setBasket(new Basket());
-
-
-        $product = $this->getDoctrine()->getManager()
-                        ->getRepository(Product::class)
-                        ->find($id)
-                        ->setCartItem($cart);
+        $cart->setLib('testCart');
+        $cart->setQuantity($nb);
+        $em->persist($cart);
         $em->flush();
     }
 }

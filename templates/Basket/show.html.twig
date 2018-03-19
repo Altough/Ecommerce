@@ -11,8 +11,7 @@ Panier
 {% endblock %}
 {%  block body %}
     <h1>Panier </h1>
-        form :{{ form }}<br>
-        panierId: {{ panier }}
+    {% include "_basket.html.twig" with {"basket" : basket} %}
 {% endblock %}
 
 

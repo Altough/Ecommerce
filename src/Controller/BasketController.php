@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Basket;
 use App\Entity\CartItem;
 use App\Entity\Product;
 use App\Entity\Category;
@@ -25,23 +26,27 @@ class BasketController extends controller
     /**
      * @Route ("/basket", name ="basket")
      */
-    public function indexAction(Request $request, SessionInterface $session){
-       // $form = $request->query->get('Quantity');
-       // $forms->get('Quantity')->getData();
-        // ici je devrais avoir la quantité du produit ainsi que son id
+    public function index(Request $request){
+        $basket = $this->getDoctrine()->getRepository(Basket::class)
+                        ->findAll();
 
-        // Je créer en suit la quantité de produit
-        // je les ajoutes au cartItem
-        // J'ajoute le cartItem au panier
-        //$session->set('panier',$id);
-       // $panier = $request->query->get("id");
-        /*$this->getDoctrine()
-            ->getRepository(CartItem::class)
-            ->findAll();*/
-
-        return $this->render('Basket/show.html.twig',['panier' => $panier,
-                                                            'form' => $form]);
+        return $this->render('Basket/index.html.twig',['baskets' => $basket]);
     }
+
+    /**
+     * @Route ("/basket_show", name ="basket_show")
+     * Affichage d'un panier
+     */
+    public function show(Request $request, SessionInterface $session){
+        $id = $request->query->get('id');
+        // On récupère le produit
+        $basket = $this->getDoctrine()->getManager()
+            ->getRepository(Basket::class)
+            ->find($id);
+
+        return $this->render('Basket/show.html.twig', ['basket' => $basket]);
+    }
+
 
    /* /**
      * @param Request $request

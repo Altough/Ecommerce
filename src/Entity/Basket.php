@@ -18,17 +18,18 @@ class Basket
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="CartItem", inversedBy="baskets")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $cartItem;
 
     /**
      * @ var string
      * @ORM\Column(type="string", length=50)
      */
     private $lib;
+
+    /**
+     * One basket has Many CartItems.
+     * @ORM\OneToMany(targetEntity="CartItem", mappedBy="basket")
+     */
+    private $cartItems;
 
     /**
      * @return mixed
@@ -67,15 +68,15 @@ class Basket
      */
     public function getCartItem()
     {
-        return $this->cartItem;
+        return $this->cartItems;
     }
 
     /**
      * @param mixed $cartItem
      */
-    public function setCartItem($cartItem)
+    public function setCartItems($cartItem)
     {
-        $this->cartItem = $cartItem;
+        $this->cartItems->add($cartItem);
     }
 
     public function __toString()

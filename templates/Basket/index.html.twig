@@ -1,0 +1,16 @@
+{# Page d'affichage des paniers #}
+{% extends "base.html.twig" %}
+
+{%  block title %}
+    Produits
+{% endblock %}
+
+{% block header %}
+    Liste des paniers
+{%  endblock %}
+{%  block body %}
+     {%  for basket in baskets %}
+        {% include "_basket.html.twig" with {"basket" : basket} %}
+     {% endfor %}
+
+{% endblock %}

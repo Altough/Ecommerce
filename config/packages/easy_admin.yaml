@@ -23,6 +23,6 @@ easy_admin:
                     - { property: 'imageFile', type: 'vich_image'}
                     - category
                     - cartItem
-            list:
-                fields:
-                    - cartItem
+#            list:
+#                fields:
+#                    - cartItem
