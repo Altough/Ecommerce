@@ -67,11 +67,11 @@ class ProductController extends controller
                 $em->persist($cart);
                 $em->flush();
 
-                $product->setCartItem($cart);
+                $product->setCartItems($cart);
 
                 $basket = new Basket();
                 $basket->setLib('testBasket');
-                $basket->setCartItem($cart);
+                $basket->setCartItems($cart->getId());
 
                 $em->persist($basket);
                 $em->flush();

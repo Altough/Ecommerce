@@ -19,13 +19,13 @@ class HomeController extends Controller
      * @Route ("/", name ="home")
      */
     public function indexAction(Request $request){
-        $products = $this->getDoctrine()
+      /*  $products = $this->getDoctrine()
             ->getRepository(Product::class)
-            ->findAll();
+            ->findAll();*/
         $categories = $this->getDoctrine()
             ->getRepository(Category::class)
             ->findAll();
 
-        return $this->render('./base.html.twig',['products' => $products, 'categories' => $categories]);
+        return $this->render('./base.html.twig',['products' => "", 'categories' => $categories]);
     }
 }

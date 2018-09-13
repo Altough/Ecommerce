@@ -3,26 +3,32 @@ easy_admin:
 #        # List the entity class name you want to manage
         Basket:
             class: App\Entity\Basket
+            form:
+                fields:
+                    - lib
+                    - cartItems
 
         CartItem:
             class: App\Entity\CartItem
-
+            form:
+                fields:
+                    - lib
+                    - quantity
+                    - { property: 'products'}
         Category:
             class: App\Entity\Category
             form:
-                 fields:
+                fields:
                     - lib
                     - { property: 'products'}
+                    - { property: 'imageFile', type: 'vich_image'}
         Product:
             class: App\Entity\Product
             form:
-                 fields:
+                fields:
                     - lib
                     - price
                     - description
                     - { property: 'imageFile', type: 'vich_image'}
-                    - category
-                    - cartItem
-#            list:
-#                fields:
-#                    - cartItem
+                    - categories
+                    - cartItems

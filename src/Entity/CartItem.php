@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
+ * @ApiResource
  * @ORM\Entity
  */
 class CartItem
@@ -26,9 +29,17 @@ class CartItem
 
     /**
      * @var integer
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $quantity;
+    private $quantity = null;
+
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Product", inversedBy="cartItems")
+     * @ORM\JoinColumn(name="product_cart_item")
+     * @var Collection<Product>
+     */
+    private $products;
 
     /**
      * @return mixed
@@ -45,17 +56,37 @@ class CartItem
     {
         $this->quantity = $quantity;
     }
-    /**
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="cartItems")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
-     */
-    private $product;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+
+    }
+
 
     /**
-     * @ORM\ManyToOne(targetEntity="Basket", inversedBy="cartItems")
-     * @ORM\JoinColumn(name="basket_id", referencedColumnName="id")
+     * @return mixed
      */
-    private $basket;
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * @param mixed $product
+     */
+    public function setProducts($product)
+    {
+       if($this->products->contains($product))
+            return;
+        $this->products[] = $product;
+    }
+
+    /**
+     * @ORM\OneToOne(targetEntity="Basket", inversedBy="cartItems")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $basket = null;
 
 
     /**
@@ -90,21 +121,6 @@ class CartItem
         $this->lib = $lib;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getProduct()
-    {
-        return $this->product;
-    }
-
-    /**
-     * @param mixed $product
-     */
-    public function setProduct($product)
-    {
-        $this->product->$product;
-    }
 
     /**
      * @return mixed

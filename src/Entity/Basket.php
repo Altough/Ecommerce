@@ -4,8 +4,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
+ * @ApiResource
  * @ORM\Entity
  */
 class Basket
@@ -27,9 +31,10 @@ class Basket
 
     /**
      * One basket has Many CartItems.
-     * @ORM\OneToMany(targetEntity="CartItem", mappedBy="basket")
+     * @ORM\OneToOne(targetEntity="CartItem", mappedBy="basket", cascade={"all"})
      */
     private $cartItems;
+
 
     /**
      * @return mixed
@@ -66,7 +71,7 @@ class Basket
     /**
      * @return mixed
      */
-    public function getCartItem()
+    public function getCartItems()
     {
         return $this->cartItems;
     }
@@ -76,7 +81,8 @@ class Basket
      */
     public function setCartItems($cartItem)
     {
-        $this->cartItems->add($cartItem);
+        if($this->contains)
+        $this->cartItems = new ArrayCollection($cartItem);
     }
 
     public function __toString()

@@ -6,6 +6,7 @@
         "ext-iconv": "*",
         "api-platform/api-pack": "^1.1",
         "javiereguiluz/easyadmin-bundle": "^1.17",
+        "nelmio/cors-bundle": "^1.5",
         "symfony/console": "^4.0",
         "symfony/debug-pack": "^1.0",
         "symfony/dotenv": "^4.0",
@@ -20,6 +21,7 @@
         "vich/uploader-bundle": "^1.8"
     },
     "require-dev": {
+        "symfony/maker-bundle": "^1.7"
     },
     "config": {
         "preferred-install": {

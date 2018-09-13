@@ -35,19 +35,21 @@ class Product
     private $price;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
+     * Many Products have Many Categories
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="products")
      * @ORM\JoinColumn(nullable=true)
-     */
-    private $category;
+     *///      * @ORM\JoinTable(name="product   s_categories")
+    private $categories;
 
     /**
-     * One product has Many CartItems.
-     * @ORM\OneToMany(targetEntity="CartItem", mappedBy="product")
+     * Many Products has One CartItems.
+     * @ORM\ManyToMany(targetEntity="CartItem", mappedBy="products")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $cartItems;
 
@@ -69,9 +71,13 @@ class Product
      */
     private $updatedAt;
 
-    public function __construct(){
-        $this->cartItems = new ArrayCollection();
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    $this->cartItems = new ArrayCollection();
+
     }
+
     /**
      * @return \DateTime
      */
@@ -184,23 +190,26 @@ class Product
     /**
      * @return mixed
      */
-    public function getCategory()
+    public function getCategories()
     {
-        return $this->category;
+        return $this->categories;
     }
 
     /**
      * @param mixed $category
      */
-    public function setCategory(Category $category)
+    public function setCategories(Category $category)
     {
-        $this->category = $category;
+        if($this->categories->contains($category)){
+            return;
+        }
+        $this->categories[] = $category;
     }
 
     /**
      * @return mixed
      */
-    public function getCartItem()
+    public function getCartItems()
     {
         return $this->cartItems;
     }
@@ -210,7 +219,10 @@ class Product
      */
     public function setCartItems($cartItem)
     {
-        $this->cartItems->add($cartItem);
+        if($this->cartItem->contains($cartItem)){
+            return;
+        }
+        $this->cartItems[] = $cartItem;
     }
 
     public function __toString()
